@@ -1,0 +1,14 @@
+/.DS_Store
+.DS_Store
+
+pom.xml
+om_sente.js
+*jar
+/lib/
+/classes/
+/out/
+/target/
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+/.nrepl-port
