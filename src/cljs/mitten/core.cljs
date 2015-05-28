@@ -3,18 +3,25 @@
             [om.dom :as dom :include-macros true]
             [ajax.core :refer [GET]]))
 
-(defonce app-state (atom {:books `() :projects `()}))
+(defonce app-state (atom {
+                          :books []
+                          :projects []}))
 
 (def url "https://api.github.com/repos/high-5/discussion/issues/")
 
-(defn resource-format [{:keys [body user] :as comment}]
-  (str body " - " (:login user)))
-
-(defn resource-view [resource owner]
+(defn resource-view [{:keys [body user] :as resource} owner]
   (reify
     om/IRender
     (render [this]
-      (dom/li nil (resource-format resource)))))
+      (dom/li nil
+        (str body " - ")
+        (dom/a #js {:href (:html_url user)}
+               (:login user))))))
+
+(defn resources-view [resources owner]
+  (reify
+    (render [this]
+            (apply dom/ul nil (om/build-all resource-view resources)))))
 
 (defn main []
   (om/root
@@ -28,7 +35,6 @@
               (om/build-all resource-view (:books app)))))))
     app-state
     {:target (. js/document (getElementById "app"))}))
-
 
 
 (defn get-issue [issue-number issue-key]
