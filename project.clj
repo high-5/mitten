@@ -17,7 +17,8 @@
                  [enlive "1.1.5"]
                  [om "0.8.0-rc1"]
                  [environ "1.0.0"]
-                 [cljs-ajax "0.3.11"]]
+                 [cljs-ajax "0.3.11"]
+                 [markdown-clj "0.9.66"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-environ "1.0.0"]]
