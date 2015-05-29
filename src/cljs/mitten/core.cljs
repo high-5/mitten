@@ -11,14 +11,26 @@
 
 (def url "https://api.github.com/repos/high-5/discussion/issues/")
 
+(defn get-link-data [link]
+  {:text (dommy/text link) :href (.-href link)})
+
+(defn md->links [md]
+  (let [el (. js/document createElement "div")]
+    (aset el "innerHTML" (md->html md))
+    (map get-link-data (sel el :a))))
+
+(defn link-view [{:keys [text href] :as link-data} owner]
+  (reify
+    om/IRender
+    (render [this]
+      (dom/a #js {:href href} text))))
+
 (defn resource-view [{:keys [body user] :as resource} owner]
   (reify
     om/IRender
     (render [this]
-      (dom/li nil
-        (str body " - ")
-        (dom/a #js {:href (:html_url user)}
-               (:login user))))))
+      (apply dom/li nil
+        (om/build-all link-view (md->links body))))))
 
 (defn resources-view [resources owner]
   (reify
@@ -31,8 +43,7 @@
       (reify
         om/IRender
         (render [_]
-
-          (dom/div {:className "books"}
+          (dom/div #js {:className "books"}
             (apply dom/ul nil
               (om/build-all resource-view (:books app)))))))
     app-state
