@@ -18,7 +18,8 @@
                  [om "0.8.0-rc1"]
                  [environ "1.0.0"]
                  [cljs-ajax "0.3.11"]
-                 [markdown-clj "0.9.66"]]
+                 [markdown-clj "0.9.66"]
+                 [prismatic/dommy "1.1.0"]]
 
   :plugins [[lein-cljsbuild "1.0.3"]
             [lein-environ "1.0.0"]]

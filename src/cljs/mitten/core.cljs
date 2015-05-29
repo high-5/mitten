@@ -1,7 +1,9 @@
 (ns mitten.core
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
-            [ajax.core :refer [GET]]))
+            [ajax.core :refer [GET]]
+            [markdown.core :refer [md->html]]
+            [dommy.core :as dommy :refer-macros [sel sel1]]))
 
 (defonce app-state (atom {
                           :books []
