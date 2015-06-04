@@ -19,23 +19,21 @@
     (aset el "innerHTML" (md->html md))
     (map get-link-data (sel el :a))))
 
-(defn link-view [{:keys [text href] :as link-data} owner]
+(defn link-view [{:keys [user link-data]} owner]
   (reify
     om/IRender
     (render [this]
-      (dom/a #js {:href href} text))))
+      (dom/li nil
+        (dom/a #js {:href (:href link-data)} (:text link-data))
+        (dom/span nil " - " )
+        (dom/a #js {:href (:html_url user)} (:login user))))))
 
 (defn resource-view [{:keys [body user] :as resource} owner]
   (reify
     om/IRender
     (render [this]
-      (apply dom/li nil
-        (om/build-all link-view (md->links body))))))
-
-(defn resources-view [resources owner]
-  (reify
-    (render [this]
-            (apply dom/ul nil (om/build-all resource-view resources)))))
+      (apply dom/ul nil
+        (om/build-all link-view (map #(zipmap [:user :link-data] [user %])(md->links body)))))))
 
 (defn main []
   (om/root
@@ -44,8 +42,10 @@
         om/IRender
         (render [_]
           (dom/div #js {:className "books"}
-            (apply dom/ul nil
-              (om/build-all resource-view (:books app)))))))
+            (apply dom/div nil
+              (om/build-all resource-view (:books app)))
+            (apply dom/div nil
+              (om/build-all resource-view (:projects app)))))))
     app-state
     {:target (. js/document (getElementById "app"))}))
 
