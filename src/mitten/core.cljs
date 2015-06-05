@@ -12,7 +12,7 @@
 (def url "https://api.github.com/repos/high-5/discussion/issues/")
 
 (defn get-link-data [link]
-  {:text (.-innerText link) :href (.-href link)})
+  {:text (dommy/text link) :href (.-href link)})
 
 (defn md->links [md]
   (let [el (. js/document createElement "div")]
