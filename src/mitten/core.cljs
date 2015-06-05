@@ -12,7 +12,7 @@
 (def url "https://api.github.com/repos/high-5/discussion/issues/")
 
 (defn get-link-data [link]
-  {:text (dommy/text link) :href (.-href link)})
+  {:text (.-innerText link) :href (.-href link)})
 
 (defn md->links [md]
   (let [el (. js/document createElement "div")]
@@ -41,10 +41,12 @@
       (reify
         om/IRender
         (render [_]
-          (dom/div #js {:className "books"}
-            (apply dom/div nil
+          (dom/section #js {:className "links"}
+            (dom/h2 nil "Books")
+            (apply dom/div #js {:className "books"}
               (om/build-all resource-view (:books app)))
-            (apply dom/div nil
+            (dom/h2 nil "Projects")
+            (apply dom/div #js {:className "projects"}
               (om/build-all resource-view (:projects app)))))))
     app-state
     {:target (. js/document (getElementById "app"))}))
