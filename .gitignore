@@ -41,3 +41,4 @@ pom.xml.asc
 /zzz/
 /target/
 /html/css
+/node_modules
