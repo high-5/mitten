@@ -6,10 +6,10 @@
                  [adzerk/boot-reload    "0.2.6"      :scope "test"]
                  [boot-cljs-test/node-runner "0.1.0" :scope "test"]
                  [pandeiro/boot-http    "0.3.0"      :scope "test"]
-                 [org.omcljs/om "0.8.8" :scope "test"]
-                 [cljs-ajax "0.3.11" :scope "test"]
-                 [markdown-clj "0.9.66" :scope "test"]
-                 [prismatic/dommy "1.1.0" :scope "test"]])
+                 [org.omcljs/om "0.8.8"]
+                 [cljs-ajax "0.3.11"]
+                 [markdown-clj "0.9.66"]
+                 [prismatic/dommy "1.1.0"]])
 
 (require
  '[adzerk.boot-cljs      :refer [cljs]]
