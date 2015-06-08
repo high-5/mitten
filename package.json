@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-myth": "^1.0.3"
+  },
+  "dependencies": {
+    "cssrecipes-defaults": "^0.5.0",
+    "cssrecipes-reset": "^0.5.0"
+  }
+}
