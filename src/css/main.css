@@ -1,2 +1,21 @@
 @import "../../node_modules/cssrecipes-defaults/index.css";
 @import "../../node_modules/cssrecipes-reset/index.css";
+
+:root {
+  font-size: 20px;
+  font-family: sans-serif;
+}
+
+.app {
+  margin: 2rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  color: rgb(120, 120, 120);
+}
+
+.user {}

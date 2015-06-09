@@ -48,13 +48,14 @@
         (dom/li nil
           (dom/a #js {:href href} text)
           (dom/span nil " - " )
-          (dom/a #js {:href html_url} login))))))
+          (dom/a #js {:href html_url}
+            (dom/span #js {:className "user"} login)))))))
 
 (defn resource-view [resource owner]
   (reify
     om/IRender
     (render [this]
-      (apply dom/ul nil
+      (apply dom/ul #js {:className "r-ResetList"}
         (om/build-all link-view resource)))))
 
 (defn main []
