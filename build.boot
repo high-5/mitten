@@ -9,7 +9,8 @@
                  [org.omcljs/om "0.8.8"]
                  [cljs-ajax "0.3.11"]
                  [markdown-clj "0.9.66"]
-                 [prismatic/dommy "1.1.0"]])
+                 [prismatic/dommy "1.1.0"]
+                 [secretary "1.2.3"]])
 
 (require
  '[adzerk.boot-cljs      :refer [cljs]]
