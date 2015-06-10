@@ -1,9 +1,23 @@
 (ns mitten.core
   (:require [om.core :as om :include-macros true]
             [om.dom :as dom :include-macros true]
+            [clojure.string :as string]
             [ajax.core :refer [GET]]
             [markdown.core :refer [md->html]]
-            [dommy.core :as dommy :refer-macros [sel sel1]]))
+            [dommy.core :as dommy :refer-macros [sel sel1]]
+            [goog.events :as events]
+            [goog.history.EventType :as EventType]
+            [secretary.core :as sec :refer-macros [defroute]])
+            (:import goog.History))
+
+(sec/set-config! :prefix "#")
+
+(let [history (History.)
+      navigation EventType/NAVIGATE]
+  (goog.events/listen history
+                     navigation
+                     #(-> % .-token sec/dispatch!))
+  (doto history (.setEnabled true)))
 
 ;; keep atom up top
 
@@ -58,22 +72,28 @@
       (apply dom/ul #js {:className "r-ResetList"}
         (om/build-all link-view resource)))))
 
-(defn main []
+(defroute "/:page" {:as params}
   (om/root
     (fn [app owner]
       (reify
         om/IRender
         (render [_]
           (dom/section #js {:className "links"}
-            (dom/h2 nil "Books")
+            (dom/ul nil
+              (dom/a #js {:href "#books"} "Books")
+              (dom/a #js {:href "#projects"} "Projects"))
+            (dom/h2 nil (string/capitalize (:page params)))
             (apply dom/div #js {:className "books"}
-              (om/build-all resource-view (:books app)))
-            (dom/h2 nil "Projects")
-            (apply dom/div #js {:className "projects"}
-              (om/build-all resource-view (:projects app)))))))
+              (om/build-all resource-view ((keyword (:page params)) app)))))))
     app-state
     {:target (. js/document (getElementById "app"))}))
 
+
+(defn main []
+  (let [location (.-hash js/window.location)]
+    (if (empty? location)
+      (set! (.-hash js/window.location) "#books")
+      (sec/dispatch! location))))
 
 ;; kick off requests
 
