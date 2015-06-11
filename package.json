@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "gulp"
+  },
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-myth": "^1.0.3"
