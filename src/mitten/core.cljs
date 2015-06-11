@@ -79,9 +79,11 @@
         om/IRender
         (render [_]
           (dom/section #js {:className "links"}
-            (dom/ul nil
-              (dom/a #js {:href "#books"} "Books")
-              (dom/a #js {:href "#projects"} "Projects"))
+            (dom/ul #js {:className "r-ResetList nav"}
+              (dom/li #js {:className "nav-el"}
+                (dom/a #js {:href "#books" :className "nav-el_link"} "Books"))
+              (dom/li #js {:className "nav-el"}
+                (dom/a #js {:href "#projects" :className "nav-el_link"} "Projects")))
             (dom/h2 nil (string/capitalize (:page params)))
             (apply dom/div #js {:className "books"}
               (om/build-all resource-view ((keyword (:page params)) app)))))))
